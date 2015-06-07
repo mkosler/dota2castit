@@ -1,0 +1,16 @@
+{
+  "name": "dota2castit",
+  "version": "0.0.1",
+  "description": "A place for players and casters to get together",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Kosler",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "express": "^4.12.4",
+    "method-override": "^2.3.3"
+  }
+}
