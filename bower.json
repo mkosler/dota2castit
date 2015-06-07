@@ -5,6 +5,10 @@
   "authors": [
     "Michael Kosler"
   ],
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/mkosler/dota2castit.git"
+  },
   "license": "MIT",
   "dependencies": {
     "bootstrap": "~3.3.4",
