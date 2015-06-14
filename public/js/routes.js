@@ -5,5 +5,5 @@ angular.module('mainModule').config(['$routeProvider', '$locationProvider', func
             controller: 'mainCtrl'
         });
 
-    $locationProvider.html5mode(true);
+    //$locationProvider.html5Mode(true);
 }]);

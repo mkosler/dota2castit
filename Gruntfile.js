@@ -6,12 +6,13 @@ module.exports = function (grunt) {
                 script: '<%= pkg.main %>',
                 options: {
                     env: {
-                        PORT: '8080'
+                        PORT: '3000'
                     },
                     ignore: [
                         'node_modules/**'
                     ],
-                    cwd: __dirname
+                    cwd: __dirname,
+                    nodeArgs: [ '--debug' ]
                 }
             }
         }
