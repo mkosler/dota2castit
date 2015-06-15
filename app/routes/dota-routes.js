@@ -1,23 +1,14 @@
 var router = require('express').Router();
-var request = require('request');
 var SECRETS = require('../../.secrets.json');
-
-var matchBaseRequest = request.defaults({
-    baseUrl: 'https://api.steampowered.com/IDOTA2Match_570/'
-});
+var dotaService =  new require('../services/dota-api-service')(SECRETS.STEAM_WEB_API_KEY);
 
 router.get('/match/:id', function (req, res) {
-    matchBaseRequest({
-        uri: '/GetMatchDetails/V001/',
-        qs: {
-            key: SECRETS.STEAM_WEB_API_KEY,
-            match_id: req.params.id
-        }
-    }, function (err, response, body) {
-        if (!err && response.statusCode === 200) {
-            res.json(JSON.parse(body));
-        }
-    });
+    dotaService.getMatchDetails({ match_id: req.params.id })
+        .then(function (body) {
+            body = JSON.parse(body);
+        })
+        .catch(function (err) {
+        });
 });
 
 module.exports = router;

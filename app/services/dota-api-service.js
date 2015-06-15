@@ -2,6 +2,7 @@ var request = require('request-promise');
 
 var Dota2Api = function (key) {
     this.key = key;
+    this._conversionMagicNumber = 76561197960265728;
     this._matchBaseRequest = request.defaults({
         baseUri: 'https://api.steampowered.com/IDOTA2Match_570/'
     });
@@ -20,6 +21,16 @@ Dota2Api.prototype = {
         return qs;
     },
 
+    convertIdTo64: function (id) {
+        return id + this._conversionMagicNumber;
+    },
+
+    convertIdTo32L function (id) {
+        return id - this._conversionMagicNumber;
+    },
+
+
+    // === API methods ===
     getMatchHistory: function (qs) {
         return this._matchBaseRequest({
             uri: '/GetMatchHistory/v001',
