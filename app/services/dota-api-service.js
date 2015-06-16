@@ -25,7 +25,7 @@ Dota2Api.prototype = {
         return id + this._conversionMagicNumber;
     },
 
-    convertIdTo32L function (id) {
+    convertIdTo32: function (id) {
         return id - this._conversionMagicNumber;
     },
 
