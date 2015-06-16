@@ -33,14 +33,16 @@ Dota2Api.prototype = {
     // === API methods ===
     getMatchHistory: function (qs) {
         return this._matchBaseRequest({
-            uri: '/GetMatchHistory/v001',
+            uri: '/GetMatchHistory/v001/',
+            //uri: 'https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v001/',
             qs: this.applyApiKey(qs)
         });
     },
 
     getMatchDetails: function (qs) {
         return this._matchBaseRequest({
-            uri: '/GetMatchDetails/v001',
+            //uri: '/GetMatchDetails/v001/',
+            uri: 'https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v001/',
             qs: this.applyApiKey(qs)
         });
     },

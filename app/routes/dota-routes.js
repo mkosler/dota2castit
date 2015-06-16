@@ -1,12 +1,14 @@
 var router = require('express').Router();
 var SECRETS = require('../../.secrets.json');
-var dotaService =  new require('../services/dota-api-service')(SECRETS.STEAM_WEB_API_KEY);
+var Dota2Api = require('../services/dota-api-service');
+var dotaService = new Dota2Api(SECRETS.STEAM_WEB_API_KEY);
 
 router.get('/match/:id', function (req, res) {
     var match, players;
 
     dotaService.getMatchDetails({ match_id: req.params.id })
         .then(function (response) {
+            debugger;
             match = JSON.parse(response);
 
             return dotaService.getPlayerSummaries({
