@@ -15,10 +15,31 @@ module.exports = function (grunt) {
                     nodeArgs: [ '--debug' ]
                 }
             }
+        },
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                },
+                src: [ 'test/app/**/*.js' ]
+            }
+        },
+        mocha: {
+            test: {
+                src: [ 'test/public/TestRunner.html' ],
+                options: {
+                    run: true,
+                    reporter: 'Spec',
+                    logErrors: true
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-nodemon');
+    grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('grunt-mocha');
 
     grunt.registerTask('default', ['nodemon']);
+    grunt.registerTask('test', ['mochaTest', 'mocha' ]);
 };
