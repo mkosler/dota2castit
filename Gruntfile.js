@@ -16,30 +16,36 @@ module.exports = function (grunt) {
                 }
             }
         },
-        mochaTest: {
-            test: {
-                options: {
-                    reporter: 'spec',
-                },
-                src: [ 'test/app/**/*.js' ]
+        karma: {
+            unit: {
+                configFile: 'karma.config.js'
             }
         },
-        mocha: {
+        mochaTest: {
             test: {
-                src: [ 'test/public/TestRunner.html' ],
-                options: {
-                    run: true,
-                    reporter: 'Spec',
-                    logErrors: true
-                }
+                reporter: 'spec',
+                ui: 'bdd',
+            },
+            src: [ 'test/app/**/*-spec.js' ]
+        },
+        browserify: {
+            js: {
+                src: [
+                    'public/js/**/*.js',
+                    'test/public/js/**/*-spec.js',
+                    '!public/js/bundle.js'
+                ],
+                dest: 'public/js/bundle.js'
             }
-        }
+        },
     });
 
     grunt.loadNpmTasks('grunt-nodemon');
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-mocha');
+    grunt.loadNpmTasks('grunt-browserify');
 
     grunt.registerTask('default', ['nodemon']);
-    grunt.registerTask('test', ['mochaTest', 'mocha' ]);
+    grunt.registerTask('test', ['mochaTest', 'karma']);
 };

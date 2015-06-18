@@ -1,17 +1,16 @@
-var request = require('request-promise');
+var Promise = require('bluebird');
+var request = Promise.promisify(require('request'));
+Promise.promisifyAll(request);
+var url = require('url');
 
 var Dota2Api = function (key) {
     this.key = key;
     this._conversionMagicNumber = 76561197960265728;
-    this._matchBaseRequest = request.defaults({
-        baseUri: 'https://api.steampowered.com/IDOTA2Match_570/'
-    });
-    this._econBaseRequest = request.defaults({
-        baseUri: 'https://api.steampowered.com/IEconDOTA2_570/'
-    });
-    this._playerBaseRequest = request.defaults({
-        baseUri: 'https://api.steampowered.com/ISteamUser/'
-    });
+
+    var baseUri = 'https://api.steampowered.com/';
+    this._matchBaseUri = url.resolve(baseUri, '/IDOTA2Match_570/');
+    this._econBaseUri = url.resolve(baseUri, '/IEconDOTA2_570/');
+    this._playerBaseUri = url.resolve(baseUri, '/ISteamUser/');
 };
 
 Dota2Api.prototype = {
@@ -32,66 +31,64 @@ Dota2Api.prototype = {
 
     // === API methods ===
     getMatchHistory: function (qs) {
-        return this._matchBaseRequest({
-            uri: '/GetMatchHistory/v001/',
-            //uri: 'https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v001/',
+        return request({
+            uri: url.resolve(this._matchBaseUri, '/GetMatchHistory/v001/'),
             qs: this.applyApiKey(qs)
         });
     },
 
     getMatchDetails: function (qs) {
-        return this._matchBaseRequest({
-            //uri: '/GetMatchDetails/v001/',
-            uri: 'https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v001/',
+        return request.getAsync({
+            uri: url.resolve(this._matchBaseUri, '/GetMatchDetails/v001/'),
             qs: this.applyApiKey(qs)
         });
     },
 
     getHeroes: function (qs) {
-        return this._econBaseRequest({
-            uri: '/GetHeroes/v0001/',
+        return request({
+            uri: url.resolve(this._econBaseUri, '/GetHeroes/v0001/'),
             qs: this.applyApiKey(qs)
         });
     },
 
     getPlayerSummaries: function (qs) {
-        return this._playerBaseRequest({
-            uri: '/GetPlayerSummaries/v0002/',
+        return request({
+            uri: url.resolve(this._playerBaseUri, '/GetPlayerSummaries/v0002/'),
             qs: this.applyApiKey(qs)
         });
     },
 
     getLeagueListing: function (qs) {
-        return this._matchBaseRequest({
-            uri: '/GetLeagueListing/v0001/',
+        return request({
+            uri: url.resolve(this._matchBaseUri, '/GetLeagueListing/v0001/'),
             qs: this.applyApiKey(qs)
         });
     },
 
     getLiveLeagueGames: function (qs) {
-        return this._matchBaseRequest({
-            uri: '/GetLiveLeagueGames/v0001/',
+        return request({
+            uri: url.resolve(this._matchBaseUri, '/GetLiveLeagueGames/v0001/'),
             qs: this.applyApiKey(qs)
         });
     },
 
     getMatchHistoryBySequenceNum: function (qs) {
-        return this._matchBaseRequest({
-            uri: '/GetMatchHistoryBySequenceNum/v0001/',
+        return request({
+            uri: url.resolve(this._matchBaseUri, '/GetMatchHistoryBySequenceNum/v0001/'),
             qs: this.applyApiKey(qs)
         });
     },
 
     getTeamInfoByTeamID: function (qs) {
-        return this._matchBaseRequest({
-            uri: '/GetTeamInfoByTeamID/v001/',
+        return request({
+            uri: url.resolve(this._matchBaseUri, '/GetTeamInfoByTeamID/v001/'),
             qs: this.applyApiKey(qs)
         });
     },
 
     getGameItems: function (qs) {
-        return this._econBaseRequest({
-            uri: '/GetGameItems/v001/',
+        return request({
+            uri: url.resolve(this._econBaseUri, '/GetGameItems/v001/'),
             qs: this.applyApiKeys(qs)
         });
     }
