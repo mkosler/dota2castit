@@ -32,7 +32,7 @@ module.exports = function (grunt) {
             js: {
                 src: [
                     'public/js/**/*.js',
-                    'test/public/js/**/*-spec.js',
+                    //'test/public/js/**/*-spec.js',
                     '!public/js/bundle.js'
                 ],
                 dest: 'public/js/bundle.js'
@@ -46,6 +46,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-browserify');
 
-    grunt.registerTask('default', ['nodemon']);
+    grunt.registerTask('default', ['browserify', 'nodemon']);
     grunt.registerTask('test', ['mochaTest', 'karma']);
 };

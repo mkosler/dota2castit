@@ -5,8 +5,6 @@ module.exports = function(config) {
   config.set({
       browsers: ['PhantomJS'],
       files: [
-          'public/libs/requirejs/require.js',
-          'public/libs/**/*.js',
           'test/public/js/**/*-spec.js',
       ],
       frameworks: ['mocha', 'browserify'],
