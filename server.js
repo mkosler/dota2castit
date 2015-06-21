@@ -72,7 +72,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static('public'));
+app.use(express.static('dist'));
 
 // === routes ===
 require('./app/routes')(app);

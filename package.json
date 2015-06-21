@@ -34,15 +34,16 @@
     "url-join": "0.0.1"
   },
   "devDependencies": {
+    "browserify": "^10.2.4",
     "chai": "^3.0.0",
-    "grunt": "^0.4.5",
-    "grunt-browserify": "^3.8.0",
-    "grunt-concurrent": "^2.0.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-karma": "^0.11.0",
-    "grunt-mocha-test": "^0.12.7",
-    "grunt-node-inspector": "^0.2.0",
-    "grunt-nodemon": "^0.4.0",
+    "glob": "^5.0.10",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-mocha": "^2.1.2",
+    "gulp-nodemon": "^2.0.3",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
     "karma": "^0.12.36",
     "karma-browserify": "^4.2.1",
     "karma-chrome-launcher": "^0.1.12",
@@ -52,6 +53,9 @@
     "mocha": "^2.2.5",
     "open": "0.0.5",
     "phantomjs": "^1.9.17",
-    "sinon": "^1.15.3"
+    "sinon": "^1.15.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "vinyl-transform": "^1.0.0"
   }
 }
