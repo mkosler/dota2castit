@@ -4,6 +4,4 @@ angular.module('mainModule').config(['$routeProvider', '$locationProvider', func
             templateUrl: 'views/home.html',
             controller: 'mainCtrl'
         });
-
-    //$locationProvider.html5Mode(true);
 }]);

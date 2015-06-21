@@ -10,7 +10,7 @@
         <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 
         <!--STYLESHEETS-->
-        <link rel="stylesheet" href="css/bootstrap-solarized-dark.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
         <script src="js/bundle.js"></script>
     </head>
@@ -18,11 +18,12 @@
         <div class="container">
 
             <!--HEADER-->
-            <nav class="navbar navbar-inverse">
+            <nav class="navbar navbar-default">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">/r/dota2castit</a>
                 </div>
-                <div class="navbar-right">
+                <div class="nav navbar-nav navbar-right">
+                    <button type="button" class="btn btn-default navbar-btn" ng-click="openUploadModal()">Upload</button>
                     <a href="/auth/steam" ng-hide="user">
                         <img src="img/sits_large_noborder.png" alt="Sign in with Steam" />
                     </a>

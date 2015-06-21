@@ -8,11 +8,9 @@ module.exports = function (grunt) {
                     env: {
                         PORT: '3000'
                     },
-                    ignore: [
-                        'node_modules/**'
-                    ],
+                    watch: [ 'app' ],
                     cwd: __dirname,
-                    nodeArgs: [ '--debug' ]
+                    nodeArgs: [ '--debug' ],
                 }
             }
         },
@@ -22,21 +20,42 @@ module.exports = function (grunt) {
             }
         },
         mochaTest: {
-            test: {
+            unit: {
                 reporter: 'spec',
                 ui: 'bdd',
+                src: [ 'test/app/**/*-spec.js' ],
             },
-            src: [ 'test/app/**/*-spec.js' ]
         },
         browserify: {
-            js: {
+            client: {
                 src: [
                     'public/js/**/*.js',
-                    //'test/public/js/**/*-spec.js',
                     '!public/js/bundle.js'
                 ],
-                dest: 'public/js/bundle.js'
+                dest: 'public/js/bundle.js',
+            },
+            options: {
+                browserifyOptions: {
+                    debug: true
+                }
             }
+        },
+        watch: {
+            client: {
+                files: [ '<%= browserify.client.src %>' ],
+                tasks: [ 'browserify:client' ],
+            },
+        },
+        concurrent: {
+            dev: {
+                tasks: ['nodemon', 'node-inspector', 'watch'],
+                options: {
+                    logConcurrentOutput: true
+                }
+            }
+        },
+        'node-inspector': {
+            dev: {}
         },
     });
 
@@ -45,7 +64,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-node-inspector');
+    grunt.loadNpmTasks('grunt-concurrent');
 
-    grunt.registerTask('default', ['browserify', 'nodemon']);
     grunt.registerTask('test', ['mochaTest', 'karma']);
+    grunt.registerTask('default', ['browserify:client', 'test', 'concurrent:dev' ]);
 };
