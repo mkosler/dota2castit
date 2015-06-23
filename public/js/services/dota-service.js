@@ -4,7 +4,10 @@ angular.module('mainModule').factory('dotaService', [ '$http', function ($http) 
             return $http.get('/dota/match/' + id);
         },
         getMatchHistory: function (accountId) {
-            return $http.get('/dota/history/' + accountId);
+            return $http.get('/dota/history/' + accountId).then(function (result) {
+                console.log(result);
+                return result;
+            });
         },
     };
 }]);

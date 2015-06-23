@@ -2,19 +2,14 @@ angular.module('mainModule').config(['$routeProvider', '$locationProvider', func
     $routeProvider
         .when('/', {
             templateUrl: 'views/home.html',
-            controller: 'mainCtrl',
-            //resolve: {
-                //user: [ 'authService', function (authService) {
-                    //return authService.checkLoggedIn();
-                //}],
-            //}
+            controller: 'mainCtrl'
         })
         .when('/users/:displayname', {
             templateUrl: 'views/user.html',
             controller: 'userCtrl',
             resolve: {
                 loggedin: [ 'authService', function (authService) {
-                    return authService.checkLoggedIn();
+                    return authService.checkLoggedIn(true);
                 }]
             }
         })

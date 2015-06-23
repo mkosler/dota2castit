@@ -28,7 +28,7 @@
                         <img src="img/sits_large_noborder.png" alt="Sign in with Steam" />
                     </a>
                     <p class="navbar-text" ng-show="user">
-                    Welcome, <a href="#/user/{{ user.displayname }}" class="navbar-link">{{ user.displayname }}</a>
+                    Welcome, <a ng-href="#/users/{{ user.displayname }}" class="navbar-link">{{ user.displayname }}</a>
                     </p>
                 </div>
             </nav>

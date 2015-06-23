@@ -6,16 +6,16 @@ angular.module('mainModule').factory('authService', [ '$http', '$q', '$location'
         logout: function () {
             return $http.get();
         },
-        checkLoggedIn: function () {
+        checkLoggedIn: function (redirect) {
             var deferred = $q.defer();
 
             $http.get('/auth/loggedin').success(function (user) {
                 if (user !== '0') {
-                    deferred.resolve();
                     $rootScope.user = user;
+                    deferred.resolve();
                 } else {
                     deferred.reject();
-                    $location.url('/');
+                    if (redirect) $location.url('/');
                 }
             }).error(function (reason) {
                 console.log(reason);
