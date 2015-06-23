@@ -40,4 +40,18 @@ router.get('/match/:id', function (req, res) {
         });
 });
 
+router.get('/history/:id', function (req, res) {
+    dotaService.getMatchHistory({ account_id: req.params.id })
+        .then(function (response) {
+            if (response.result.status === 15) {
+                res.status(404).send(response.result.statusDetail);
+            }
+
+            res.send(response.result);
+        })
+        .catch(function (reason) {
+            res.status(reason.statusCode).send(reason.error);
+        });
+});
+
 module.exports = router;

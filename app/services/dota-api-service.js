@@ -21,7 +21,6 @@ Dota2Api.prototype = {
     },
 
     convertIdTo32: function (id) {
-        debugger;
         var bigId = bignum(id);
 
         return bigId.sub(this._conversionMagicNumber);

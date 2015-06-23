@@ -64,7 +64,7 @@ gulp.task('start', [ 'karma', 'copy' ], function () {
     nodemon({
         script: 'server.js',
         env: { PORT: '3000' },
-        watch: [ 'app' ],
+        watch: [ 'app', 'server.js' ],
         cwd: __dirname,
         nodeArgs: [ '--debug' ],
     });

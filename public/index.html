@@ -14,7 +14,7 @@
 
         <script src="bundle.min.js"></script>
     </head>
-    <body ng-app="mainModule" ng-controller="mainCtrl">
+    <body ng-app="mainModule">
         <div class="container">
 
             <!--HEADER-->
@@ -28,7 +28,7 @@
                         <img src="img/sits_large_noborder.png" alt="Sign in with Steam" />
                     </a>
                     <p class="navbar-text" ng-show="user">
-                        Welcome, {{ user.name }}
+                    Welcome, <a href="#/user/{{ user.displayname }}" class="navbar-link">{{ user.displayname }}</a>
                     </p>
                 </div>
             </nav>
