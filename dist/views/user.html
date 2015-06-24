@@ -14,9 +14,7 @@
                 <tr ng-repeat="match in history.matches">
                     <td>{{ match.match_id }}</td>
                     <td>
-                        <ul class="list-unstyled">
-                            <li ng-repeat="player in match.players">{{ player.hero_id }}</li>
-                        </ul>
+                        <img ng-repeat="player in match.players" alt="{{ player.hero.name }}" ng-src="http://cdn.dota2.com/apps/dota2/images/heroes/{{ player.hero.imagename }}_sb.png" />
                     </td>
                 </tr>
             </tbody>

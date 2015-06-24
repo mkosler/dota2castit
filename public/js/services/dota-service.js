@@ -3,10 +3,9 @@ angular.module('mainModule').factory('dotaService', [ '$http', function ($http) 
         getById: function (id) {
             return $http.get('/dota/match/' + id);
         },
-        getMatchHistory: function (accountId) {
-            return $http.get('/dota/history/' + accountId).then(function (result) {
-                console.log(result);
-                return result;
+        getMatchHistory: function (accountId, params) {
+            return $http.get('/dota/history/' + accountId, {
+                params: params
             });
         },
     };

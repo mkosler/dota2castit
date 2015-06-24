@@ -41,13 +41,42 @@ router.get('/match/:id', function (req, res) {
 });
 
 router.get('/history/:id', function (req, res) {
-    dotaService.getMatchHistory({ account_id: req.params.id })
+    var query = req.query;
+    query.account_id = req.params.id;
+
+    var history;
+
+    dotaService.getMatchHistory(query)
         .then(function (response) {
-            if (response.result.status === 15) {
+            if (response.result.status !== 1) {
                 res.status(404).send(response.result.statusDetail);
             }
 
-            res.send(response.result);
+            history = response.result;
+
+            return dotaService.getHeroes();
+        })
+        .then(function (response) {
+            var heroes = [];
+
+            // for some reason, forEach fails but accessing by index does not
+            response.result.heroes.forEach(function (hero, i) {
+                hero.imagename = hero.name.match(/npc_dota_hero_(\w+)/)[1];
+
+                heroes[hero.id] = hero;
+            });
+            
+            //for (var i = 0; i < response.result.count; i++) {
+                //heroes[response.result.heroes[i].id] = response.result.heroes[i];
+            //}
+            
+            history.matches.forEach(function (match, i) {
+                match.players.forEach(function (player, j) {
+                    history.matches[i].players[j].hero = heroes[player.hero_id];
+                });
+            });
+
+            res.send(history);
         })
         .catch(function (reason) {
             res.status(reason.statusCode).send(reason.error);
