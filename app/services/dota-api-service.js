@@ -80,6 +80,10 @@ Dota2Api.prototype = {
     getTeamInfoByTeamID: function (qs) {
         return this.call(urljoin(this._matchBaseUri, '/GetTeamInfoByTeamID/v001/'), qs);
     },
+
+    getGameItems: function (qs) {
+        return this.call(urljoin(this._econBaseUri, '/GetGameItems/v001/'), qs);
+    },
 };
 
 module.exports = Dota2Api;
