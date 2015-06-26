@@ -1,72 +1,58 @@
 var pg = require('pg');
 var Promise = require('bluebird');
+var utilService = require('../service/util-service');
 
 var ItemRepository = function (uri) {
     this.uri = uri;
 };
 
 ItemRepository.prototype = {
+    _call: function (handler) {
+        return Promise.using(utilService.getConnection(this.uri), handler);
+    },
+
     getAll: function () {
-        var self = this;
-
-        return new Promise(function (resolve, reject) {
-            pg.connect(self.uri, function (err, client, done) {
-                if (err) {
-                    done(client);
-                    return reject(err);
-                }
-
-                var query = client.query('SELECT itemid, apidata FROM item;');
-
-                query.on('error', function (reason) {
-                    done(client);
-                    reject(reason);
-                });
-
-                query.on('row', function (row, result) {
-                    result.addRow(row);
-                });
-
-                query.on('end', function (result) {
-                    resolve(result.rows);
-                    done();
-                });
-            });
+        return this._call(function (client) {
+            return client.queryAsync('SELECT itemid, apiData FROM item;');
         });
     },
 
     insert: function (item) {
-        var self = this;
-
-        return new Promise(function (resolve, reject) {
-            pg.connect(self.uri, function (err, client, done) {
-                if (err) {
-                    done(client);
-                    return reject(err);
-                }
-
-                var query = client.query(
-                    'INSERT INTO item (itemid, apidata) VALUES ($1, $2);',
-                    [ item.id, item ]);
-
-                query.on('error', function (reason) {
-                    done(client);
-                    reject(reason);
-                });
-
-                query.on('end', function (result) {
-                    resolve();
-                    done();
-                });
+        return this._call(function (client) {
+            return client.queryAsync({
+                text: 'INSERT INTO Item (ItemId, ApiData) VALUES ($1, $2);',
+                values: [ item.id, item ]
             });
         });
     },
 
     bulkInsert: function (items) {
-        var self = this;
         return Promise.all(items.map(function (item) {
-            return self.insert(item);
-        }));
+            return this.insert(item);
+        }).bind(this));
+    },
+
+    update: function (item) {
+        var stmt = 'UPDATE Item SET ' +
+                   'ItemId = $1, ' +
+                   'ApiData = $2 ' +
+                   'WHERE ItemId = $1;';
+
+        return this._call(function (client) {
+            return client.queryAsync({
+                text: stmt,
+                values: [ item.id, item ]
+            });
+        });
+    },
+
+    delete: function (itemId) {
+        return this._call(function (client) {
+            return client.queryAsync({
+                text: 'DELETE FROM Item WHERE ItemId = $1;',
+                values: [ itemId ]
+            });
+        });
     },
 };
 
